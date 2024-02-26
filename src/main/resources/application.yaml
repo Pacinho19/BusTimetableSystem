@@ -8,3 +8,6 @@ spring:
     active: 'local'
   main:
     banner-mode: off
+server:
+  servlet:
+    context-path: '/api/bus-timetable-system'
