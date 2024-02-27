@@ -2,8 +2,10 @@ package pl.pacinho.bustimetablesystem.bus.model.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @NoArgsConstructor
@@ -15,12 +17,23 @@ public class BusRoute {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @Setter
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "bus_id")
     private Bus bus;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @Setter
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "bus_route_id")
-    private Set<BusRouteStop> busStops;
+    private Set<BusRouteStop> busStops = new HashSet<>();
 
+    public BusRoute(Bus bus, Set<BusRouteStop> busStops) {
+        this.bus = bus;
+        this.busStops = busStops;
+    }
+
+    public void addBusStop(BusRouteStop busRouteStop) {
+        this.busStops.add(busRouteStop);
+        busRouteStop.setBusRoute(this);
+    }
 }
