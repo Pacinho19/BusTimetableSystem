@@ -5,7 +5,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,21 +18,17 @@ public class BusRoute {
     private int id;
 
     @Setter
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "bus_id")
-    private Bus bus;
-
-    @Setter
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "bus_route_id")
     private Set<BusRouteStop> busStops = new HashSet<>();
 
-    private LocalTime departureTime;
+    private int distance;
+    private int summaryTime;
 
-    public BusRoute(Bus bus, Set<BusRouteStop> busStops, LocalTime departureTime) {
-        this.bus = bus;
+    public BusRoute(Set<BusRouteStop> busStops, int distance, int summaryTime) {
         this.busStops = busStops;
-        this.departureTime = departureTime;
+        this.distance = distance;
+        this.summaryTime = summaryTime;
     }
 
     public void addBusStop(BusRouteStop busRouteStop) {

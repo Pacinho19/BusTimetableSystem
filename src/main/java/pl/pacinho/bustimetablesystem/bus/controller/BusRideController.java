@@ -4,27 +4,23 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pl.pacinho.bustimetablesystem.bus.model.dto.BusDto;
-import pl.pacinho.bustimetablesystem.bus.model.entity.BusRoute;
-import pl.pacinho.bustimetablesystem.bus.service.BusRouteService;
-import pl.pacinho.bustimetablesystem.bus.service.BusService;
+import pl.pacinho.bustimetablesystem.bus.service.BusRideService;
 
 import javax.websocket.server.PathParam;
-import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
-@RequestMapping("/bus-route")
+@RequestMapping("/bus-ride")
 @RestController
-public class BusRouteController {
+public class BusRideController {
 
-    private final BusRouteService busRouteService;
+    private final BusRideService busRideService;
 
     @GetMapping("/bus")
     ResponseEntity<BusDto> findAll(@PathParam("busId") int busId) {
-        Optional<BusDto> routesByBus = busRouteService.findAll(busId);
+        Optional<BusDto> routesByBus = busRideService.findAll(busId);
         return routesByBus.map(
                 ResponseEntity::ok
         ).orElse(ResponseEntity.notFound().build());

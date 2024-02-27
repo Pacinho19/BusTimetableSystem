@@ -5,7 +5,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalTime;
 
 @NoArgsConstructor
 @Getter
@@ -41,6 +40,13 @@ public class BusRouteStop {
         this.busStop = busStop;
         this.busRoute = busRoute;
         this.previousStop = previousStop;
+        this.minutesFromStart = minutesFromStart;
+    }
+
+    public BusRouteStop(int number, BusStop busStop, BusRoute busRoute, int minutesFromStart) {
+        this.number = number;
+        this.busStop = busStop;
+        this.busRoute = busRoute;
         this.minutesFromStart = minutesFromStart;
     }
 }
