@@ -11,7 +11,7 @@ public class BusRouteStopPreviousStopSetter {
 
     private static BusRouteStop getPreviousStop(int number, List<BusRouteStop> stops) {
         return stops.stream()
-                .filter(busRouteStop -> busRouteStop.getNumber() - 1 == number)
+                .filter(busRouteStop -> busRouteStop.getNumber() + 1 == number)
                 .findFirst()
                 .orElse(null);
     }
