@@ -1,26 +1,26 @@
-insert into bus_route_stop(number, bus_route_id, bus_stop_id, arrival_time, departure_time)
-values (1, 1, 1, '5:20', '5:21');
+insert into bus_route_stop(number, bus_route_id, bus_stop_id, previous_bus_route_stop_id, minutes_from_start)
+values (1, 1, 1, null, 0);
 
-insert into bus_route_stop(number, bus_route_id, bus_stop_id, arrival_time, departure_time)
-values (2, 1, 2, '5:21', '5:22');
+insert into bus_route_stop(number, bus_route_id, bus_stop_id, previous_bus_route_stop_id, minutes_from_start)
+values (2, 1, 2, 1, 1);
 
-insert into bus_route_stop(number, bus_route_id, bus_stop_id, arrival_time, departure_time)
-values (3, 1, 3, '5:22', '5:23');
+insert into bus_route_stop(number, bus_route_id, bus_stop_id, previous_bus_route_stop_id, minutes_from_start)
+values (3, 1, 3, 2, 2);
 
-insert into bus_route_stop(number, bus_route_id, bus_stop_id, arrival_time, departure_time)
-values (4, 1, 4, '5:23', '5:24');
+insert into bus_route_stop(number, bus_route_id, bus_stop_id, previous_bus_route_stop_id, minutes_from_start)
+values (4, 1, 4, 3, 4);
 
-insert into bus_route_stop(number, bus_route_id, bus_stop_id, arrival_time, departure_time)
-values (5, 1, 5, '5:24', '5:25');
+insert into bus_route_stop(number, bus_route_id, bus_stop_id, previous_bus_route_stop_id, minutes_from_start)
+values (5, 1, 5, 4, 6);
 
-insert into bus_route_stop(number, bus_route_id, bus_stop_id, arrival_time, departure_time)
-values (6, 1, 6, '5:25', '5:25');
+insert into bus_route_stop(number, bus_route_id, bus_stop_id, previous_bus_route_stop_id, minutes_from_start)
+values (6, 1, 6, 5, 8);
 
-insert into bus_route_stop(number, bus_route_id, bus_stop_id, arrival_time, departure_time)
-values (7, 1, 7, '5:27', '5:27');
+insert into bus_route_stop(number, bus_route_id, bus_stop_id, previous_bus_route_stop_id, minutes_from_start)
+values (7, 1, 7, 6, 10);
 
-insert into bus_route_stop(number, bus_route_id, bus_stop_id, arrival_time, departure_time)
-values (8, 1, 8, '5:34', '5:35');
+insert into bus_route_stop(number, bus_route_id, bus_stop_id, previous_bus_route_stop_id, minutes_from_start)
+values (8, 1, 8, 7, 18);
 
-insert into bus_route_stop(number, bus_route_id, bus_stop_id, arrival_time, departure_time)
-values (9, 1, 9, '5:41', null);
+insert into bus_route_stop(number, bus_route_id, bus_stop_id, previous_bus_route_stop_id, minutes_from_start)
+values (9, 1, 9, 8, 23);

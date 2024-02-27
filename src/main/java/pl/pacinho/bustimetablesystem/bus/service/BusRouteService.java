@@ -16,7 +16,7 @@ public class BusRouteService {
 
     public Optional<BusDto> findAll(int busId) {
         return BusMapper.convert(
-                busRouteRepository.findAll(busId)
+                busRouteRepository.findAllWithFetchBusAndStops(busId)
         );
     }
 }

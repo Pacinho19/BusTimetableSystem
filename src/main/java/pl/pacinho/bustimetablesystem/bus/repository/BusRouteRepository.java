@@ -19,5 +19,5 @@ public interface BusRouteRepository extends JpaRepository<BusRoute, Integer> {
             join fetch brs.busStop bs
             where b.id = :busId
             """)
-    List<BusRoute> findAll(@Param("busId") int busId);
+    List<BusRoute> findAllWithFetchBusAndStops(@Param("busId") int busId);
 }

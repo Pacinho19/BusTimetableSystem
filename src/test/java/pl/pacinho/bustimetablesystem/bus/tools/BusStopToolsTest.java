@@ -72,10 +72,10 @@ class BusStopToolsTest {
 
     private static Set<BusRouteStop> getBusRouteStopsWithNumberFromOneToFour() {
         return Set.of(
-                new BusRouteStop(1, null, null, null, null),
-                new BusRouteStop(2, null, null, null, null),
-                new BusRouteStop(3, null, null, null, null),
-                new BusRouteStop(4, null, null, null, null)
+                new BusRouteStop(1, null, null, null, 0),
+                new BusRouteStop(2, null, null, null, 0),
+                new BusRouteStop(3, null, null, null, 0),
+                new BusRouteStop(4, null, null, null, 0)
         );
     }
 

@@ -28,14 +28,19 @@ public class BusRouteStop {
     @JoinColumn(name = "bus_route_id")
     private BusRoute busRoute;
 
-    private LocalTime arrivalTime;
-    private LocalTime departureTime;
+    @Setter
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "previous_bus_route_stop_id")
+    private BusRouteStop previousStop;
 
-    public BusRouteStop(int number, BusStop busStop, BusRoute busRoute, LocalTime arrivalTime, LocalTime departureTime) {
+    @Setter
+    private int minutesFromStart;
+
+    public BusRouteStop(int number, BusStop busStop, BusRoute busRoute, BusRouteStop previousStop, int minutesFromStart) {
         this.number = number;
         this.busStop = busStop;
         this.busRoute = busRoute;
-        this.arrivalTime = arrivalTime;
-        this.departureTime = departureTime;
+        this.previousStop = previousStop;
+        this.minutesFromStart = minutesFromStart;
     }
 }

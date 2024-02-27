@@ -7,8 +7,7 @@ public class BusRouteStopMapper {
     public static BusRouteStopDto convert(BusRouteStop busRouteStop) {
         return new BusRouteStopDto(
                 BusStopMapper.convert(busRouteStop.getBusStop()),
-                busRouteStop.getArrivalTime(),
-                busRouteStop.getDepartureTime()
+                busRouteStop.getBusRoute().getDepartureTime().plusMinutes(busRouteStop.getMinutesFromStart())
         );
     }
 }

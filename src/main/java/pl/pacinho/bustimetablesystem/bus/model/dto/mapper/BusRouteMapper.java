@@ -1,7 +1,6 @@
 package pl.pacinho.bustimetablesystem.bus.model.dto.mapper;
 
 import pl.pacinho.bustimetablesystem.bus.model.dto.BusRouteDto;
-import pl.pacinho.bustimetablesystem.bus.model.dto.BusRouteStopDto;
 import pl.pacinho.bustimetablesystem.bus.model.entity.BusRoute;
 import pl.pacinho.bustimetablesystem.bus.tools.BusStopTools;
 
