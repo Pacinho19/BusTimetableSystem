@@ -28,7 +28,7 @@ public class BusRouteDataInitializer {
         Bus bus = busRepository.findByNumber(2)
                 .orElse(new Bus(2, 50, 10));
 
-        BusRoute busRoute = new BusRoute(bus, 15, 23);
+        BusRoute busRoute = new BusRoute(bus, 15, 30);
 
         List<BusRouteStop> busRouteStops = List.of(
                 new BusRouteStop(1, getBusStopOrCreate("Lubiatowo 01", "Lubiatowo ul. Maślana 6"), busRoute, 0),
@@ -40,7 +40,8 @@ public class BusRouteDataInitializer {
                 new BusRouteStop(7, getBusStopOrCreate("Św Wojciecha 01", "Koszalin ul. Św Wojciech 31"), busRoute, 17),
                 new BusRouteStop(8, getBusStopOrCreate("Zielona 01", "Koszalin ul. Zielona 12"), busRoute, 18),
                 new BusRouteStop(9, getBusStopOrCreate("Moniuszki 01", "Koszalin ul. Moniuszki 13"), busRoute, 20),
-                new BusRouteStop(10, getBusStopOrCreate("Miła 01", "Koszalin ul. Miła 1"), busRoute, 23)
+                new BusRouteStop(10, getBusStopOrCreate("Miła 01", "Koszalin ul. Miła 1"), busRoute, 23),
+                new BusRouteStop(11, getBusStopOrCreate("Miłosna 01", "Koszalin ul. Miłosna 19"), busRoute, 30)
         );
 
         busRouteStops.forEach(busRouteStop -> {

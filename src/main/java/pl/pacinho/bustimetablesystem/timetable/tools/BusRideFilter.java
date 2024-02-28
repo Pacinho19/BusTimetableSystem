@@ -5,36 +5,34 @@ import pl.pacinho.bustimetablesystem.bus.model.entity.BusRouteStop;
 import pl.pacinho.bustimetablesystem.bus.model.entity.BusStop;
 import pl.pacinho.bustimetablesystem.timetable.model.FilterBusRouteDto;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class BusRideFilter {
 
-    public static FilterBusRouteDto filterBusRoute(Set<BusRouteStop> busRouteStops, String from, String to) {
-        Optional<BusRouteStop> initialBusStopOpt = getBusStopWithMinNumber(busRouteStops, from);
-        if (initialBusStopOpt.isEmpty())
-            return null;
+    public static List<FilterBusRouteDto> filterBusRoute(Set<BusRouteStop> busRouteStops, String from, String to) {
+        List<BusRouteStop> initialBusStops = getBusStop(busRouteStops, from);
+        if (initialBusStops.isEmpty())
+            return Collections.emptyList();
 
-        Optional<BusRouteStop> finalBusStopOpt = getBusStopWithMinNumber(busRouteStops, to);
+        List<BusRouteStop> finalBusStops = getBusStop(busRouteStops, to);
+        if (finalBusStops.isEmpty())
+            return Collections.emptyList();
 
-        if (finalBusStopOpt.isEmpty())
-            return null;
-
-        BusRouteStop initialBusStop = initialBusStopOpt.get();
-        BusRouteStop finalBusStop = finalBusStopOpt.get();
-
-        return initialBusStop.getNumber() < finalBusStop.getNumber()
-                ? new FilterBusRouteDto(initialBusStop, finalBusStop)
-                : null;
+        List<FilterBusRouteDto> filteredRoute = new ArrayList<>();
+        for (BusRouteStop initialBusStop : initialBusStops) {
+            for (BusRouteStop finalBusStop : finalBusStops) {
+                if (initialBusStop.getNumber() < finalBusStop.getNumber())
+                    filteredRoute.add(new FilterBusRouteDto(initialBusStop, finalBusStop));
+            }
+        }
+        return filteredRoute;
     }
 
-    private static Optional<BusRouteStop> getBusStopWithMinNumber(Set<BusRouteStop> busRouteStops, String from) {
+    private static List<BusRouteStop> getBusStop(Set<BusRouteStop> busRouteStops, String from) {
         return busRouteStops.stream()
                 .filter(brs -> checkBusStop(brs.getBusStop(), from))
-                .min(Comparator.comparing(BusRouteStop::getNumber));
+                .collect(Collectors.toList());
     }
 
     private static boolean checkBusStop(BusStop busStop, String partOfBusStop) {

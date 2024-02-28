@@ -16,6 +16,7 @@ import pl.pacinho.bustimetablesystem.timetable.tools.BusRideFilter;
 import pl.pacinho.bustimetablesystem.validator.StringEmptyFieldValidator;
 
 import java.time.LocalTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -27,7 +28,8 @@ public class RideSearchService {
     private final BusRideRepository busRideRepository;
 
     public List<RideSearchResultDto> search(String from, String to) {
-        if (StringEmptyFieldValidator.isNonNullAndNotEmpty(from) || StringEmptyFieldValidator.isNonNullAndNotEmpty(to))
+        if (!StringEmptyFieldValidator.isNonNullAndNotEmpty(from)
+            || !StringEmptyFieldValidator.isNonNullAndNotEmpty(to))
             throw new InvalidBusStopNameException();
 
         List<BusRide> busRides = busRideRepository.findAllWithFetchBusAndStops();
@@ -35,20 +37,26 @@ public class RideSearchService {
                 .collect(Collectors.groupingBy(BusRide::getBusRoute))
                 .entrySet()
                 .stream()
-                .map(entry -> mapToRideSearchResultDto(entry.getKey(), entry.getValue(), from, to))
+                .map(entry -> findRoutes(entry.getKey(), entry.getValue(), from, to))
+                .flatMap(List::stream)
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
     }
 
-    private RideSearchResultDto mapToRideSearchResultDto(BusRoute busRoute, List<BusRide> busRides, String from, String to) {
-        FilterBusRouteDto filterBusRouteDto = BusRideFilter.filterBusRoute(busRoute.getBusStops(), from, to);
-        if (filterBusRouteDto == null)
-            return null;
+    private List<RideSearchResultDto> findRoutes(BusRoute busRoute, List<BusRide> busRides, String from, String to) {
+        List<FilterBusRouteDto> filteredRoutes = BusRideFilter.filterBusRoute(busRoute.getBusStops(), from, to);
+        if (filteredRoutes.isEmpty())
+            return Collections.emptyList();
 
+        return filteredRoutes.stream()
+                .map(filterBusRouteDto -> mapToRideSearchResultDto(busRoute, busRides, filterBusRouteDto))
+                .collect(Collectors.toList());
+    }
+
+    private RideSearchResultDto mapToRideSearchResultDto(BusRoute busRoute, List<BusRide> busRides, FilterBusRouteDto filterBusRouteDto) {
         List<BusRouteStop> routeBetweenStops = BusRideFilter.getRouteBetweenStops(busRoute.getBusStops(),
                 filterBusRouteDto.initialBusStop(),
                 filterBusRouteDto.finalBusStop());
-
 
         return RideSearchResultDto.builder()
                 .bus(BusMapper.convert(busRoute.getBus()))
@@ -63,6 +71,5 @@ public class RideSearchService {
                 .map(busRide -> busRide.getArriveTime().plusMinutes(busRouteStop.getMinutesFromStart()))
                 .collect(Collectors.toList());
     }
-
 
 }
