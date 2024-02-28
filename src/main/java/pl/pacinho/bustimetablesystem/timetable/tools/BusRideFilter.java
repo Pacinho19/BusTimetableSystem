@@ -1,6 +1,6 @@
 package pl.pacinho.bustimetablesystem.timetable.tools;
 
-
+import lombok.NonNull;
 import pl.pacinho.bustimetablesystem.bus.model.entity.BusRouteStop;
 import pl.pacinho.bustimetablesystem.bus.model.entity.BusStop;
 import pl.pacinho.bustimetablesystem.timetable.model.FilterBusRouteDto;
@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 public class BusRideFilter {
 
-    public static List<FilterBusRouteDto> filterBusRoute(Set<BusRouteStop> busRouteStops, String from, String to) {
+    public static List<FilterBusRouteDto> filterBusRoute(Set<BusRouteStop> busRouteStops, @NonNull String from, @NonNull String to) {
         List<BusRouteStop> initialBusStops = getBusStop(busRouteStops, from);
         if (initialBusStops.isEmpty())
             return Collections.emptyList();
@@ -45,10 +45,10 @@ public class BusRideFilter {
                 .contains(text.toLowerCase());
     }
 
-    public static List<BusRouteStop> getRouteBetweenStops(Set<BusRouteStop> busStops, BusRouteStop initialBusStop, BusRouteStop finalBusStop) {
+    public static List<BusRouteStop> getRouteBetweenStops(Set<BusRouteStop> busStops, int initialBusStopNumber,  int finalBusStopNumber) {
         return busStops.stream()
-                .filter(busRouteStop -> busRouteStop.getNumber() >= initialBusStop.getNumber()
-                                        && busRouteStop.getNumber() <= finalBusStop.getNumber())
+                .filter(busRouteStop -> busRouteStop.getNumber() >= initialBusStopNumber
+                                        && busRouteStop.getNumber() <= finalBusStopNumber)
                 .sorted(Comparator.comparing(BusRouteStop::getNumber))
                 .collect(Collectors.toList());
     }

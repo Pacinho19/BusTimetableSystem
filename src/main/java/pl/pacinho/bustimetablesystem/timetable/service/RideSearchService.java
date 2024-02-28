@@ -55,8 +55,8 @@ public class RideSearchService {
 
     private RideSearchResultDto mapToRideSearchResultDto(BusRoute busRoute, List<BusRide> busRides, FilterBusRouteDto filterBusRouteDto) {
         List<BusRouteStop> routeBetweenStops = BusRideFilter.getRouteBetweenStops(busRoute.getBusStops(),
-                filterBusRouteDto.initialBusStop(),
-                filterBusRouteDto.finalBusStop());
+                filterBusRouteDto.initialBusStop().getNumber(),
+                filterBusRouteDto.finalBusStop().getNumber());
 
         return RideSearchResultDto.builder()
                 .bus(BusMapper.convert(busRoute.getBus()))
