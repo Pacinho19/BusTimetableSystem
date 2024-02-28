@@ -6,25 +6,23 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.pacinho.bustimetablesystem.timetable.model.RideSearchResultDto;
-import pl.pacinho.bustimetablesystem.timetable.model.dto.Timetable;
-import pl.pacinho.bustimetablesystem.timetable.service.TimetableService;
+import pl.pacinho.bustimetablesystem.timetable.service.RideSearchService;
 
 import javax.websocket.server.PathParam;
 import java.util.List;
 
-@RequestMapping("/timetable")
+@RequestMapping("/search")
 @RequiredArgsConstructor
 @RestController
-public class TimetableController {
+public class RideSearchController {
 
-    private final TimetableService timetableService;
+    private final RideSearchService rideSearchService;
 
-    @GetMapping("/bus")
-    ResponseEntity<?> findAll(@PathParam("busId") int busId) {
-        List<Timetable> timetables = timetableService.generate(busId);
-        return timetables.isEmpty()
+    @GetMapping(params = {"from", "to"})
+    ResponseEntity<?> search(@PathParam("from") String from, @PathParam("to") String to) {
+        List<RideSearchResultDto> searchResult = rideSearchService.search(from, to);
+        return searchResult.isEmpty()
                 ? ResponseEntity.notFound().build()
-                : ResponseEntity.ok(timetables);
+                : ResponseEntity.ok(searchResult);
     }
-
 }

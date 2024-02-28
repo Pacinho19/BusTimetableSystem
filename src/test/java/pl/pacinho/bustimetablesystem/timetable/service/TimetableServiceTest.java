@@ -49,7 +49,7 @@ class TimetableServiceTest {
     void timetableListWithOneElementShouldBeGeneratedWhenExistOneRouteForGivenBusId() {
         //given
         BusRoute busRoute = getBusRouteWithThreeStops();
-        BusRide busRide = new BusRide(null, busRoute, LocalTime.now());
+        BusRide busRide = new BusRide(busRoute, LocalTime.now());
         List<BusRide> busRides = List.of(busRide);
 
         given(busRideRepository.findAllWithFetchBusAndStops(anyInt())).willReturn(busRides);
@@ -69,7 +69,7 @@ class TimetableServiceTest {
         //given
         BusRoute busRoute = getBusRouteWithThreeStops();
         busRoute.getBusStops().clear();
-        BusRide busRide = new BusRide(null, busRoute, LocalTime.now());
+        BusRide busRide = new BusRide(busRoute, LocalTime.now());
         List<BusRide> busRides = List.of(busRide);
 
         given(busRideRepository.findAllWithFetchBusAndStops(anyInt())).willReturn(busRides);
@@ -84,7 +84,7 @@ class TimetableServiceTest {
     }
 
     private BusRoute getBusRouteWithThreeStops() {
-        BusRoute busRoute = new BusRoute(100, 100);
+        BusRoute busRoute = new BusRoute(null, 100, 100);
         busRoute.addBusStop(new BusRouteStop(1, new BusStop("Test", "Test"), busRoute, 0));
         busRoute.addBusStop(new BusRouteStop(2, new BusStop("Test2", "Tes2"), busRoute, 5));
         busRoute.addBusStop(new BusRouteStop(3, new BusStop("Test3", "Tes3"), busRoute, 10));

@@ -6,12 +6,10 @@ import pl.pacinho.bustimetablesystem.bus.model.dto.mapper.BusStopMapper;
 import pl.pacinho.bustimetablesystem.bus.model.entity.BusRide;
 import pl.pacinho.bustimetablesystem.bus.model.entity.BusRoute;
 import pl.pacinho.bustimetablesystem.bus.repository.BusRideRepository;
-import pl.pacinho.bustimetablesystem.bus.repository.BusRouteRepository;
 import pl.pacinho.bustimetablesystem.timetable.model.dto.BusRideDto;
 import pl.pacinho.bustimetablesystem.timetable.model.dto.BusStopTimeDto;
 import pl.pacinho.bustimetablesystem.timetable.model.dto.Timetable;
 
-import java.sql.Time;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;

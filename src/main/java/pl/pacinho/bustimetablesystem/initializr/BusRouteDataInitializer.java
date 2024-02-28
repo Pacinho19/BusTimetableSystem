@@ -28,7 +28,7 @@ public class BusRouteDataInitializer {
         Bus bus = busRepository.findByNumber(2)
                 .orElse(new Bus(2, 50, 10));
 
-        BusRoute busRoute = new BusRoute(15, 23);
+        BusRoute busRoute = new BusRoute(bus, 15, 23);
 
         List<BusRouteStop> busRouteStops = List.of(
                 new BusRouteStop(1, getBusStopOrCreate("Lubiatowo 01", "Lubiatowo ul. Maślana 6"), busRoute, 0),
@@ -51,7 +51,7 @@ public class BusRouteDataInitializer {
 
         getRideArriveTimes()
                 .forEach(time -> {
-                    BusRide busRide = new BusRide(bus, busRoute, time);
+                    BusRide busRide = new BusRide(busRoute, time);
                     busRideRepository.save(busRide);
                 });
     }

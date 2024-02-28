@@ -1,9 +1,13 @@
 package pl.pacinho.bustimetablesystem.bus.model.dto;
 
-import java.util.List;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
-public record BusDto(int number,
-                     int numberOfSeats,
-                     int numberOfStandingSeats,
-                     List<BusRouteDto> rides) {
+@RequiredArgsConstructor
+@Getter
+public class BusDto {
+
+    final int number;
+    final int numberOfSeats;
+    final int numberOfStandingSeats;
 }
