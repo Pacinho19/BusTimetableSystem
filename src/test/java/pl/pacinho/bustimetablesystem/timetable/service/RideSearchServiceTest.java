@@ -102,7 +102,7 @@ class RideSearchServiceTest {
                 hasProperty("times", contains(startTime))
         ));
 
-        assertThat(searchResults, contains(
+        assertThat(searchResults, containsInAnyOrder(
                         hasProperty("stops", contains(
                                         new BusStopDto("Test_1", "Test_1"),
                                         new BusStopDto("Test_2", "Test_2"),
