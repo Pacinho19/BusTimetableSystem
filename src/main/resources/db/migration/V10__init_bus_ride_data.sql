@@ -8,3 +8,13 @@ insert into bus_ride(bus_route_id, arrive_time) values (1, '14:41');
 insert into bus_ride(bus_route_id, arrive_time) values (1, '15:28');
 insert into bus_ride(bus_route_id, arrive_time) values (1, '16:35');
 insert into bus_ride(bus_route_id, arrive_time) values (1, '19:11');
+
+insert into bus_ride(bus_route_id, arrive_time) values (2, '5:53');
+insert into bus_ride(bus_route_id, arrive_time) values (2, '6:54');
+insert into bus_ride(bus_route_id, arrive_time) values (2, '8:58');
+insert into bus_ride(bus_route_id, arrive_time) values (2, '12:39');
+insert into bus_ride(bus_route_id, arrive_time) values (2, '13:38');
+insert into bus_ride(bus_route_id, arrive_time) values (2, '15:10');
+insert into bus_ride(bus_route_id, arrive_time) values (2, '16:12');
+insert into bus_ride(bus_route_id, arrive_time) values (2, '17:03');
+insert into bus_ride(bus_route_id, arrive_time) values (2, '19:39');

@@ -18,9 +18,9 @@ public interface BusRideRepository extends JpaRepository<BusRide, Integer> {
             join fetch brr.bus b
             join fetch brr.busStops brs
             join fetch brs.busStop bs
-            where b.id = :busId
+            where b.number = :busNumber
             """)
-    List<BusRide> findAllWithFetchBusAndStops(@Param("busId") int busId);
+    List<BusRide> findAllWithFetchBusAndStops(@Param("busNumber") int busNumber);
 
     @Query(value = """
             select distinct br

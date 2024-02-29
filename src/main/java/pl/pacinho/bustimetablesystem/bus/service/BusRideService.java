@@ -14,9 +14,9 @@ public class BusRideService {
 
     private final BusRideRepository busRideRepository;
 
-    public Optional<BusWithRidesDto> findAll(int busId) {
+    public Optional<BusWithRidesDto> findAll(int busNumber) {
         return BusMapper.convertWithRides(
-                busRideRepository.findAllWithFetchBusAndStops(busId)
+                busRideRepository.findAllWithFetchBusAndStops(busNumber)
         );
     }
 

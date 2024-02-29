@@ -19,8 +19,8 @@ public class BusRideController {
     private final BusRideService busRideService;
 
     @GetMapping("/bus")
-    ResponseEntity<BusWithRidesDto> findAll(@PathParam("busId") int busId) {
-        Optional<BusWithRidesDto> routesByBus = busRideService.findAll(busId);
+    ResponseEntity<BusWithRidesDto> findAll(@PathParam("busNumber") int busNumber) {
+        Optional<BusWithRidesDto> routesByBus = busRideService.findAll(busNumber);
         return routesByBus.map(
                 ResponseEntity::ok
         ).orElse(ResponseEntity.notFound().build());

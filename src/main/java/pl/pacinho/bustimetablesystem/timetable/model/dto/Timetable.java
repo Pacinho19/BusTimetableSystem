@@ -4,8 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import pl.pacinho.bustimetablesystem.bus.model.dto.BusDto;
 
-import java.time.LocalTime;
 import java.util.List;
 
 @Getter
@@ -14,7 +14,6 @@ import java.util.List;
 @Builder
 public class Timetable {
 
-    private BusRideDto ride;
-    private List<LocalTime> arriveTimes;
-    private List<BusStopTimeDto> stops;
+    private BusDto busDto;
+    private List<BusRideDto> rides;
 }

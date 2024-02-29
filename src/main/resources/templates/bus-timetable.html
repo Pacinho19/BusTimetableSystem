@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="|Timetable for bus line numer ${busNumber}|"></title>
+
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.css">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+        .d-flex{
+          gap:20px;
+        }
+
+        hr.rounded {
+          border-top: 8px solid #bbb;
+          border-radius: 5px;
+        }
+
+        div.circles, div.circles2 {
+          position:relative;
+        }
+        div[class^="circles"]::before {
+          background:red;
+          border-radius:100%;
+          content:"";
+          display:inline-block;
+          position:absolute;
+          top:50%;
+          transform:translate(-50%, 50%);
+        }
+        .circles::before {
+          height:10px;
+          width:10px;
+        }
+        .circles2::before {
+          height:20px;
+          width:20px;
+        }
+        .circles::after {
+          background:black;
+          content: "";
+          display:inline-block;
+          height:30px;
+          left:0;
+          position:absolute;
+          top:50%;
+          transform:translate(-50%, 50%);
+          width:2px;
+          z-index:-1;
+        }
+        span {
+          margin-left:15px;
+        }
+
+        .smallpadding {
+           padding: 2px !important;
+           margin: 0 !important;
+        }
+
+
+    </style>
+</head>
+<body>
+
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+        <div class="d-flex justify-content-center" style="font-size: 1rem;margin-top:1%">
+            <a th:each="line : ${busLines}"
+               th:class="${line==busNumber ? 'badge badge-pill badge-success' : 'badge badge-pill badge-primary'}"
+               style="font-size: 1.5rem;"
+               th:href="@{'/timetable/' + ${line}}" th:text="${line}"/>
+            </a>
+
+        </div>
+
+        <div class="d-flex justify-content-center" style="font-size: 1rem;margin-top:1%">
+            <p th:each="ride,iterStat : ${timetable.rides}">
+                <a th:href="@{/timetable/{busNumber}?ride={rideNumber}(busNumber=${busNumber}, rideNumber=${iterStat.index})}"
+                   th:text="|${ride.stops[0].busStop.name} - ${ride.stops[ride.stops.size-1].busStop.name}|"/>
+                </a>
+            </p>
+        </div>
+        <h2 style="color:red;text-align:center; margin-top:1%" th:text="|Not found routes for line number ${busNumber}|"
+            th:if="${timetable==null}"></h2>
+
+        <div th:if="${timetable!=null}">
+            <!--                style="height:80vh;max-height:90vh;border:2px solid;border-radius:15px; margin-top:1%"-->
+            <div class="row" style="height:15vh;max-height:15vh;width:100%">
+                <div class="col-md-9">
+                    <div class="row">
+                        <div class="col-md-2 align-self-center" style="text-align:center">
+                            <strong style="font-size:5rem">1</strong>
+                        </div>
+                        <div class="col-md-10 align-self-center"
+                             th:with="busRide=${timetable.rides[param.ride ==null ? 0 : param.ride]}">
+                            <h2 style="color:blue" th:with="busStop=${busRide.stops[0].busStop}"
+                                th:text="|From: ${param.stop!=null ? param.stop : busStop.name}|">test</h2>
+                            <h2 style="color:green" th:with="busStop=${busRide.stops[busRide.stops.size-1].busStop}"
+                                th:text="|To: ${busStop.name}|">test 2</h2>
+                        </div>
+
+                        <!--                        <hr class="rounded" style="width:90%">-->
+                    </div>
+
+                    <div class="row" style="margin:0 auto;width:100%;padding-left:5px">
+
+                        <div class="table table-responsive"
+                             th:with="arriveTimes=${timetable.rides[param.ride ==null ? 0 : param.ride].arriveTimes}">
+                            <table style="width:100%" class="table"
+                                   th:with="hours=${#numbers.sequence(arriveTimes[0].plusMinutes(extraMinutes).getHour(), arriveTimes[arriveTimes.size-1].plusMinutes(extraMinutes).getHour())}">
+                                <thead>
+                                <tr>
+                                    <td style="background-color:yellow;text-align:right">Hours</td>
+                                    <td
+                                            th:each="hour : ${hours}"
+                                            th:text="${hour}"
+                                            style="background-color:yellow;border: 1px solid white;text-align:center">
+                                    </td>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:with="arriveTimes=${timetable.rides[param.ride ==null ? 0 : param.ride].arriveTimes}">
+                                    <td style="background-color:#ADD8E6; writing-mode: vertical-rl;text-orientation: upright;text-align:right">
+                                        Minutes
+                                    </td>
+                                    <td th:each="hour : ${hours}"
+                                        style="background-color:#ADD8E6;border: 1px solid white;text-align:center">
+
+                                        <p th:each="arriveTime : ${arriveTimes}"
+                                           th:if="${arriveTime.plusMinutes(extraMinutes).getHour()==hour}"
+                                           th:text="${arriveTime.plusMinutes(extraMinutes).getMinute()}">
+                                        </p>
+
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="table-responsive-sm">
+                        <table style="width:100%" class="table table-borderless">
+                            <thead>
+                            <tr>
+                                <td style="width:20%"></td>
+                                <td style="width:60%">Route</td>
+                                <td style="width:10%">M</td>
+                                <td style="width:10%">N</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="busStopTime,iterStat  : ${timetable.rides[param.ride ==null ? 0 : param.ride].stops}">
+                                <td>
+                                    <ul style="list-style: none;">
+                                        <li>
+                                            <div class="circles"/>
+                                        </li>
+                                    </ul>
+                                </td>
+                                <td>
+                                    <a th:href="@{/timetable/{busNumber}?ride={rideNumber}&stop={stop}(busNumber=${busNumber}, rideNumber=${param.ride!=null ? param.ride : 0},stop=${busStopTime.busStop.name})}"
+                                       th:text="${busStopTime.busStop.name}"
+                                       th:styleappend="${(param.stop != null && #strings.equals(param.stop,busStopTime.busStop.name)) || (param.stop == null && iterStat.index==0)? 'color:green;font-weight:bold': ''}">
+                                    </a>
+                                </td>
+                                <td th:text="${busStopTime.time - (iterStat.index==0 ? 0 : timetable.rides[param.ride ==null ? 0 : param.ride].stops[iterStat.index-1].time)}"></td>
+                                <td th:text="${busStopTime.time}"></td>
+                            </tr>
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <td></td>
+                                <td colspan="3">M - Maximum ride time between bus stops</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td colspan="3">N - Maximum ride time ascending</td>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-md-1"></div>
+</div>
+
+</body>
+</html>
