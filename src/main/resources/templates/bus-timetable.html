@@ -74,6 +74,9 @@
         }
 
 
+
+
+
     </style>
 </head>
 <body>
@@ -96,7 +99,8 @@
                    th:href="@{/timetable/{busNumber}?ride={rideNumber}(busNumber=${busNumber}, rideNumber=${iterStat.index})}"
                    th:text="|${ride.stops[0].busStop.name} - ${ride.stops[ride.stops.size-1].busStop.name}|"/>
                 </a>
-                <label th:if="${(param.ride!=null && (''+param.ride) == (''+iterStat.index)) || (param.ride==null && iterStat.first)}"  th:text="|${ride.stops[0].busStop.name} - ${ride.stops[ride.stops.size-1].busStop.name}|">
+                <label th:if="${(param.ride!=null && (''+param.ride) == (''+iterStat.index)) || (param.ride==null && iterStat.first)}"
+                       th:text="|${ride.stops[0].busStop.name} - ${ride.stops[ride.stops.size-1].busStop.name}|">
                 </label>
             </p>
         </div>
@@ -180,13 +184,14 @@
                                     </ul>
                                 </td>
                                 <td>
-                                    <a th:if="${!iterStat.last}"
+                                    <a th:if="${!iterStat.last && busStopTime.busStop.name!=''+param.stop}"
                                        th:href="@{/timetable/{busNumber}?ride={rideNumber}&stop={stop}(busNumber=${busNumber}, rideNumber=${param.ride!=null ? param.ride : 0},stop=${busStopTime.busStop.name})}"
                                        th:text="${busStopTime.busStop.name}"
                                        th:styleappend="${(param.stop != null && #strings.equals(param.stop,busStopTime.busStop.name)) || (param.stop == null && iterStat.index==0)? 'color:green;font-weight:bold': ''}">
                                     </a>
-                                    <label th:if="${iterStat.last}"
-                                          th:text="${busStopTime.busStop.name}">
+                                    <label th:text="${busStopTime.busStop.name}"
+                                           th:styleappend="${(param.stop != null && #strings.equals(param.stop,busStopTime.busStop.name)) || (param.stop == null && iterStat.index==0)? 'color:green;font-weight:bold': ''}"
+                                           th:if="${iterStat.last || busStopTime.busStop.name==''+param.stop}">
                                     </label>
                                 </td>
                                 <td th:text="${busStopTime.time - (iterStat.index==0 ? 0 : timetable.rides[param.ride ==null ? 0 : param.ride].stops[iterStat.index-1].time)}"></td>
