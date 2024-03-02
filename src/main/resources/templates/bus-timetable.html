@@ -94,7 +94,7 @@
         </div>
 
         <div class="d-flex justify-content-center" style="font-size: 1rem;margin-top:1%">
-            <p th:each="ride,iterStat : ${timetable.rides}">
+            <p th:if="${timetable!=null}" th:each="ride,iterStat : ${timetable.rides}">
                 <a th:if="${(param.ride!=null && (''+param.ride) != (''+iterStat.index)) || (param.ride==null && !iterStat.first)}"
                    th:href="@{/timetable/{busNumber}?ride={rideNumber}(busNumber=${busNumber}, rideNumber=${iterStat.index})}"
                    th:text="|${ride.stops[0].busStop.name} - ${ride.stops[ride.stops.size-1].busStop.name}|"/>

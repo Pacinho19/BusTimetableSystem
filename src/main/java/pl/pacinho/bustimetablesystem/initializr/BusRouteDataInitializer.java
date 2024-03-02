@@ -15,7 +15,7 @@ import java.time.LocalTime;
 import java.util.List;
 
 @RequiredArgsConstructor
-@Component
+//@Component
 public class BusRouteDataInitializer {
 
     private final BusRideRepository busRideRepository;

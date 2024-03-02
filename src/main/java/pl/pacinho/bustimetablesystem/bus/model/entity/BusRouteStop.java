@@ -18,7 +18,7 @@ public class BusRouteStop {
     private int number;
 
     @Setter
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name = "bus_stop_id")
     private BusStop busStop;
 
