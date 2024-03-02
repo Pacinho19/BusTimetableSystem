@@ -1,4 +1,7 @@
 spring:
-  h2:
-    console:
-      enabled: false
+  jpa:
+    hibernate:
+      ddl-auto: validate
+
+flyway:
+  baselineOnMigrate: true
