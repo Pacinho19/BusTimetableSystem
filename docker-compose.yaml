@@ -4,9 +4,10 @@ services:
 
   springboot-bus-timetable-service:
     container_name: bus-timetable-service
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: pacinho/bus-timetable-service:1.0.0-beta
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
     ports:
       - 9090:8080
     depends_on:
