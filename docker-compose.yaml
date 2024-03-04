@@ -13,30 +13,41 @@ services:
       - MYSQL_PASSWORD=1234
       - MYSQL_ROOT_PASSWORD=1234
     volumes:
-      - bus-timetable-volume:/var/lib/mysql
+      - bus-timetable-db-volume:/var/lib/mysql
     networks:
       - bus-timetable-network
+    healthcheck:
+      test: [ "CMD", "healthcheck.sh", "--su-mysql", "--connect", "--innodb_initialized" ]
+      interval: 30s
+      timeout: 5s
+      retries: 3
 
   springboot-bus-timetable-service:
     container_name: bus-timetable-service
     image: pacinho/bus-timetable-service:1.0.0-beta
-#    build:
-#      context: .
-#      dockerfile: Dockerfile
+    #    build:
+    #      context: .
+    #      dockerfile: Dockerfile
     ports:
       - 9090:8080
     depends_on:
-      - database_mariadb
+      database_mariadb:
+        condition: service_healthy
     environment:
       - spring.profiles.active=prod
       - spring.datasource.url=jdbc:mysql://database_mariadb:3306/bus-timetable-system
       - spring.datasource.username=bus
       - spring.datasource.password=1234
+    volumes:
+      - bus-timetable-app-volume:/app
     networks:
       - bus-timetable-network
 
 volumes:
-  bus-timetable-volume:
+  bus-timetable-db-volume:
+    driver: local
+  bus-timetable-app-volume:
+    driver: local
 
 networks:
   bus-timetable-network:
