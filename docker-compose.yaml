@@ -2,6 +2,21 @@ version: "3.9"
 
 services:
 
+  database_mariadb:
+    container_name: bus-timetable-db
+    image: mariadb:latest
+    ports:
+      - 3307:3306
+    environment:
+      - MYSQL_DATABASE=bus-timetable-system
+      - MYSQL_USER=bus
+      - MYSQL_PASSWORD=1234
+      - MYSQL_ROOT_PASSWORD=1234
+    volumes:
+      - bus-timetable-volume:/var/lib/mysql
+    networks:
+      - bus-timetable-network
+
   springboot-bus-timetable-service:
     container_name: bus-timetable-service
     image: pacinho/bus-timetable-service:1.0.0-beta
@@ -19,22 +34,6 @@ services:
       - spring.datasource.password=1234
     networks:
       - bus-timetable-network
-
-  database_mariadb:
-    container_name: bus-timetable-db
-    image: mariadb:latest
-    ports:
-      - 3307:3306
-    environment:
-      - MYSQL_DATABASE=bus-timetable-system
-      - MYSQL_USER=bus
-      - MYSQL_PASSWORD=1234
-      - MYSQL_ROOT_PASSWORD=1234
-    volumes:
-      - bus-timetable-volume:/var/lib/mysql
-    networks:
-      - bus-timetable-network
-
 
 volumes:
   bus-timetable-volume:
